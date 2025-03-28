@@ -12,6 +12,10 @@ _start:
 
     ; INCISO a
     mov ebx, 0x5C4B2A60
+    mov eax, ebx
+    call pHex_dw
+
+    call SDL
 
     ; Sumar mi matrícula 0x1280062 a EBX
     add ebx, 0x01280062
@@ -20,12 +24,18 @@ _start:
     call pHex_dw
 
     call SDL
+    call SDL
 
     ; INCISO b
     ; Colocar los 16 bits menos significtativos de EBX en la pila
     push bx
 
     ; INCISO c
+
+    mov word ax, [N]
+    call pHex_w
+    call SDL
+
     ; Multiplicar Bl por 8 y guardar el valor en la variable N
     mov al, bl
     mov cl, 8
@@ -37,8 +47,14 @@ _start:
     call pHex_w
 
     call SDL
+    call SDL
 
     ; INCISO d
+    mov word ax, [N]
+    call pHex_w
+
+    call SDL
+
     ; Incrementar en 1 el valor de la variable N
     inc word [N]
 
@@ -46,6 +62,7 @@ _start:
     mov word ax, [N]
     call pHex_w
 
+    call SDL
     call SDL
 
     ; INCISO e
@@ -56,12 +73,18 @@ _start:
 
     ; Se despliegan residuo y cociente
     call pHex_b
+    call SDL
     mov al, dl
     call pHex_b
 
     call SDL
+    call SDL
 
     ; INCISO f
+    mov word ax, [N]
+    call pHex_w
+    call SDL
+
     ; Se suma N con el residuo de la división anterior
     add [N], dx
 
@@ -78,8 +101,8 @@ _start:
     pushf
     popf
     call pHex_w
-    ; FIN DEL INCISO f
 
+    call SDL
     call SDL
 
     ; INCISO g
@@ -89,7 +112,9 @@ _start:
 
     ; El registro de banderas tiene un valor de 0x060A
     ; Este valor en binario es 0000 0110 0000 1010
-    ; Las banderas activas son las banderas de dirección y de interrupción
+    ; Las banderas activas son las banderas de interrupción y dirección
+    ; Esto porque se presentó un cambio en el exterior del procesador y reconoció una interrupción
+    ; Y la de dirección se activó porque se trabajó con direcciones del procesador
 
     call SDL
 
